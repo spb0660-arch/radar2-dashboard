@@ -1,0 +1,12 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width"><title>Радар2.0</title>
+<style>body{font:14px system-ui,sans-serif;max-width:720px;margin:auto;padding:8px}h1,h2{color:#e67e22;margin:.6em 0 .3em}table{border-collapse:collapse;width:100%}td,th{padding:3px 6px;border-bottom:1px solid #eee;text-align:left}pre{white-space:pre-wrap;background:#fff7ef;padding:6px;margin:4px 0}</style>
+<h1>Радар2.0 USDT/RUB</h1><p id=st></p><h2>Курсы</h2><table id=v></table><h2>Лучшие чистые спреды</h2><table id=s></table><h2>Последние алерты</h2><div id=a></div>
+<script>
+const t=x=>new Date(x*1e3).toLocaleString('ru',{timeZone:'Europe/Moscow'})+' МСК',$=id=>document.getElementById(id),n=x=>x??'—';
+async function u(){try{const d=await(await fetch('data.json?'+Date.now())).json(),live=Date.now()/1e3-d.ts<180;
+$('st').innerHTML=(live?'🟢 жив':'🔴 не жив')+' · обновлено '+t(d.ts);
+$('v').innerHTML='<tr><th>Площадка<th>Купить<th>Продать<th>'+d.venues.map(v=>`<tr><td>${v.name}<td>${n(v.buy)}<td>${n(v.sell)}<td>${v.ok?'✅':'❌'}`).join('');
+$('s').innerHTML='<tr><th>Купить<th>Продать<th>Вал.%<th>Чист.%'+d.spreads.map(p=>`<tr><td>${p.buy} ${p.buy_px}<td>${p.sell} ${p.sell_px}<td>${p.gross}<td><b>${p.net}</b>`).join('');
+$('a').innerHTML=d.alerts.map(a=>`<pre>${a.text.replace(/</g,'&lt;')}</pre>`).join('')||'нет';}catch(e){$('st').textContent='🔴 нет данных'}}
+u();setInterval(u,6e4)
+</script>
