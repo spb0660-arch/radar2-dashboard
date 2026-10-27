@@ -3,7 +3,7 @@
 <h1>Радар2.0 USDT/RUB</h1><p id=st></p><h2>Курсы</h2><table id=v></table><h2>Лучшие чистые спреды</h2><table id=s></table><h2>Последние алерты</h2><div id=a></div>
 <script>
 const t=x=>new Date(x*1e3).toLocaleString('ru',{timeZone:'Europe/Moscow'})+' МСК',$=id=>document.getElementById(id),n=x=>x??'—';
-async function u(){try{const d=await(await fetch('data.json?'+Date.now())).json(),live=Date.now()/1e3-d.ts<180;
+async function u(){try{const d=await(await fetch('data.json?'+Date.now())).json(),live=Date.now()/1e3-d.ts<900;
 $('st').innerHTML=(live?'🟢 жив':'🔴 не жив')+' · обновлено '+t(d.ts);
 $('v').innerHTML='<tr><th>Площадка<th>Купить<th>Продать<th>'+d.venues.map(v=>`<tr><td>${v.name}<td>${n(v.buy)}<td>${n(v.sell)}<td>${v.ok?'✅':'❌'}`).join('');
 $('s').innerHTML='<tr><th>Купить<th>Продать<th>Вал.%<th>Чист.%'+d.spreads.map(p=>`<tr><td>${p.buy} ${p.buy_px}<td>${p.sell} ${p.sell_px}<td>${p.gross}<td><b>${p.net}</b>`).join('');
